@@ -15,14 +15,21 @@ function TimestampController($scope, time) {
   var self = this;
 
   function updateTimestamp() {
-    self.relativeTimestamp = time.toFuzzyString(self.timestamp);
-    self.absoluteTimestamp = dateUtil.format(new Date(self.timestamp));
+    //  This is (should be) a temporary solution.
+    var modifiedTime = self.timestamp.replace(/ /g,'T').concat('Z');
+    /* The 'updated' and 'created' data are sent to server in a format of (YYYY-MM-DDTMM:SS:SS.SSZ)
+    * However, somehow it is returned in a format of (YYYY-MM-DD MM:SS:SS.SS) (No T and Z) and this causes
+    * a format problem in Safari and incorrect information for updated and created attribute of an annotaion.
+    */
+
+    self.relativeTimestamp = time.toFuzzyString(modifiedTime);
+    self.absoluteTimestamp = dateUtil.format(new Date(modifiedTime));
 
     if (self.timestamp) {
       if (cancelTimestampRefresh) {
         cancelTimestampRefresh();
       }
-      cancelTimestampRefresh = time.decayingInterval(self.timestamp, function () {
+      cancelTimestampRefresh = time.decayingInterval(modifiedTime, function () {
         updateTimestamp();
         $scope.$digest();
       });
