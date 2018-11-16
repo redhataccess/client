@@ -469,6 +469,12 @@ function AnnotationController(
     return serviceUrl('search.tag', {tag: tag});
   };
 
+  //Future: check bug type first (JIRA/BZ)
+  this.bugTrackerURL = function() {
+    console.log('bugTrackerURL', serviceUrl('bzhost'));
+    return serviceUrl('bzhost');
+  };
+
   this.isOrphan = function() {
     if (typeof self.annotation.$orphan === 'undefined') {
       return self.annotation.$anchorTimeout;
@@ -617,6 +623,8 @@ function AnnotationController(
   };
 
   init();
+
+  this.bugTrackerURL();
 }
 
 module.exports = {
