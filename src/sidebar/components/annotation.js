@@ -142,6 +142,10 @@ function AnnotationController(
         self.edit();
       }
     }
+
+    if(self.annotation.tags){
+      self.bugTrackerURL();
+    }
   }
 
   /** Save this annotation if it's a new highlight.
@@ -468,6 +472,16 @@ function AnnotationController(
     }
     return serviceUrl('search.tag', {tag: tag});
   };
+
+  this.bugTrackerURL = function() {
+      for(let i = 0; i < this.annotation.tags.length; i++){
+        if(this.annotation.tags[i].bug.bugType === "BZ"){
+          return serviceUrl('bzhost');
+        } else if(this.annotation.tags[i].bug.bugType === "J"){
+          return serviceUrl('jirahost');
+        }
+      }
+  }
 
   this.isOrphan = function() {
     if (typeof self.annotation.$orphan === 'undefined') {
