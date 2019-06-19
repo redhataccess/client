@@ -475,10 +475,10 @@ function AnnotationController(
 
   this.bugTrackerURL = function() {
       for(let i = 0; i < this.annotation.tags.length; i++){
-        if(this.annotation.tags[i].bug.bugType === "BZ"){
-          return serviceUrl('bzhost');
-        } else if(this.annotation.tags[i].bug.bugType === "J"){
-          return serviceUrl('jirahost');
+        if(this.annotation.tags[i].bug.url != ""){
+          return this.annotation.tags[i].bug.url;
+        } else {
+          return "#";
         }
       }
   }
