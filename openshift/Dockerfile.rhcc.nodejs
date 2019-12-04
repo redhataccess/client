@@ -40,6 +40,7 @@ ENV PYTHONPATH=/opt/rh/rh-nodejs8/root/usr/lib/python2.7/site-packages${PYTHONPA
 ENV MANPATH=/opt/rh/rh-nodejs8/root/usr/share/man:$MANPATH
 
 # Install node deps
+RUN npm config set registry https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org
 RUN npm install yarn gulp gulp-cli
 RUN npm install
 
