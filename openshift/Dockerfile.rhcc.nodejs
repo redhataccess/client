@@ -42,7 +42,7 @@ ENV MANPATH=/opt/rh/rh-nodejs8/root/usr/share/man:$MANPATH
 # Install node deps
 # Fetch root cert
 RUN curl https://password.corp.redhat.com/RH-IT-Root-CA.crt --output /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt \
- & update-ca-trust-extract \
+ & update-ca-trust extract \
  & yarn config set cafile /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 RUN npm install yarn gulp gulp-cli
 RUN npm install
