@@ -32,6 +32,11 @@ RUN useradd -u 1001 -d /opt/app-root node
 COPY . /opt/app-root
 RUN chown -R node:node /opt/app-root
 
+# Fetch root cert
+RUN curl https://password.corp.redhat.com/RH-IT-Root-CA.crt --output /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt \
+ & update-ca-trust-extract \
+ & yarn config set cafile /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+
 # Apply environment config for scl nodejs
 ENV PATH=/opt/rh/rh-nodejs8/root/usr/bin:$PATH
 ENV LD_LIBRARY_PATH=/opt/rh/rh-nodejs8/root/usr/lib64:$LD_LIBRARY_PATH

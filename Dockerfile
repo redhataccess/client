@@ -13,6 +13,11 @@ COPY package.json .
 # Ensure directories writeable by unprivileged user.
 #RUN chown -R hypothesis:hypothesis *
 
+# Fetch root cert
+RUN curl https://password.corp.redhat.com/RH-IT-Root-CA.crt --output /usr/local/share/ca-certificates/RH-IT-Root-CA.crt \
+ & update-ca-certificates \
+ & yarn config set cafile /etc/ssl/certs/ca-certificates.crt
+
 # Install dependencies.
 #RUN NODE_ENV=production node --max_semi_space_size=1 --max_old_space_size=198 --optimize_for_size \
 RUN node --max_semi_space_size=1 --max_old_space_size=198 --optimize_for_size `which npm` install
